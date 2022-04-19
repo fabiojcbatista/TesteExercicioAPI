@@ -27,6 +27,7 @@ public class ViaCep {
                 .statusCode(200)
                 .contentType("application/json");
     }
+
     @Test
     public void dadoViaCepComCep94440361_QuandoBuscarDados_EntaoDeveRetornarErrTrue() {
         given().contentType("application/json")
@@ -48,6 +49,21 @@ public class ViaCep {
                 .get("{cep}/json")
                 .then()
                 .assertThat()
-                .statusCode(400);               
+                .statusCode(400);
+    }
+
+    @Test
+    public void dadoViaCepComEstadoRSCidadeViamaoRuaAlvarez_QuandoBuscarDados_EntaoDeveTerDDD51() {
+        given().contentType("application/json")
+                .pathParam("estado", "rs")
+                .pathParam("cidade", "viamão")
+                .pathParam("rua", "alvarez")
+                .when()
+                .get("{estado}/{cidade}/{rua}/json")
+                .then()
+                .assertThat()
+                .body("ddd[0]", equalTo("51"))
+                .statusCode(200)
+                .contentType("application/json");
     }
 }
